@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+{% block content %}
+<!-- <div class="container"> -->
+<nav style="border-bottom: 1px solid #e7e7e7; position:fixed; z-index: 99; top: 0; right: 0; left: 0;"
+    class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{{url_for('home')}}">Trang chủ</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">Giỏ hàng</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Loại
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {% for cate in category %}
+                    <a class="dropdown-item" href="{{url_for('get_category', id=cate.id)}}">{{cate.name}}</a>
+                    {% endfor %}
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+<!-- </div> -->
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6" id="b_image">
+            <img src="{{url_for('static',filename='images/' + sanpham.image)}}" alt="{{sanpham.name}}" width="400"
+                height="400">
+        </div>
+        <div class="col-md-6">
+            <h4>Tên: {{sanpham.name}} </h4>
+            <hr>
+            <p>Giá: {{sanpham.price}}đ</p>
+            <hr>
+            <b>Mô tả</b>
+            <p>{{sanpham.decs}}</p>
+            <form action="{{url_for('addcart')}}" method="post">
+                <input type="hidden" name="sanpham_id" value="{{sanpham.id}}">
+                <button type="submit" class="btn btn-sm btn-warning">Add to Cart</button>
+                <label for="quantity">Số lượng: </label>
+                <input type="number" name="quantity" value="1" min="1">
+            </form>
+        </div>
+    </div>
+    <hr>
+
+</div>
+
+{% endblock content %}

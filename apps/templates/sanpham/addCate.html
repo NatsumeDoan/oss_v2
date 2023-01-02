@@ -1,0 +1,29 @@
+{% extends "layout.html"%}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            {% include '_messages.html' %}
+            <!-- {% if brands %}
+            <h1 class="text-center mt-5">Thêm hãng</h1>
+            <form action="" method="post">
+                <input type="text" name="brand" id="" class="form-control">
+                <input type="submit" value="Thêm hãng" class="btn btn-info mt-2">
+            </form>
+            {% else%} -->
+            <h1 class="text-center mt-5">Thêm loại</h1>
+            <form action="" method="post">
+                <input type="text" name="cate" id="" class="form-control">
+                <input type="submit" value="Thêm loại" class="btn btn-info mt-2">
+            </form>
+            <!-- {% endif %} -->
+            <a href="/" class="btn btn-danger mt-2" style="position: relative;left: 70%; bottom: 19.5%;">Huỷ</a>
+        </div>
+        
+    </div>
+</div>
+
+{% endblock content %}

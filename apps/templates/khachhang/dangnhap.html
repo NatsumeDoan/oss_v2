@@ -1,0 +1,22 @@
+{% extends "layout.html"%}
+
+{% block content %}
+
+<div class="text-center h1 text-white bg-primary p-2">Đăng nhập</div>
+{% include '_messages.html' %}
+<div class="container">
+        {% from "_formhelpers.html" import render_field %}
+    <form method="post" enctype="multipart/form-data">
+    <div>
+        
+        {{ render_field(form.taikhoan ,class="form-control") }}
+       
+        {{ render_field(form.matkhau ,class="form-control") }}
+        
+    </div>
+    <p><input type=submit value="Đăng nhập  " class="btn btn-info mt-2"></p>
+    </form>
+    <p>Chưa có tài khoản? <a href="/dangky">Đăng ký</a></p>
+</div>
+
+{% endblock content %}

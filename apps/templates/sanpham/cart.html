@@ -1,0 +1,85 @@
+{% extends 'layout.html' %}
+{% block content %}
+<nav style="border-bottom: 1px solid #e7e7e7; position:fixed; z-index: 99; top: 0; right: 0; left: 0;" class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{{url_for('home')}}">Trang chủ</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">Giỏ hàng</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Loại
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {% for cate in category %}
+                    <a class="dropdown-item" href="{{url_for('get_category', id=cate.id)}}">{{cate.name}}</a>
+                    {% endfor %}
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link"> Cart ({{ session['Shoppingcart']|length }}) </a>
+              </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" >
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+<div class="container mt-4">
+    {% include '_messages.html' %}
+    <div class="row">
+        <div class="col-md-12">
+        <table class="table table-sm">
+            <thead>
+                <th>Sr</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Color</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Discount</th>
+                <th>Subtotal</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </thead>
+            <tbody>
+                {% for key, sanpham in session['Shoppingcart'].items() %}
+                {% set discount = sanpham.price|float %}
+                <tr>
+                    <td>{{loop.index}}</td>
+                    <td><img src="{{url_for('static',filename='images/'+ sanpham.image)}}" alt="{{sanpham.name}}" width="50" height="45"></td>
+                    <td>{{sanpham.id}}</td>
+                    <form action="{{url_for('updatecart', code=key)}}" method="post">
+                    <td>{{"%.2f"|format(sanpham.price)}}đ</td>
+                    <td> <input type="number" name="quantity" min="1" max="10" value="{{sanpham.quantity}}"> </td>
+                    <td><button type="submit" class="btn btn-sm btn-info">Update</button> </td>
+                </form>
+                    <td> <a href="{{url_for('deleteitem',id=key)}}" class="btn btn-sm btn-danger">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="table table-sm">
+           <tr>
+               <td> <a href="#" class="btn btn-success"> Order now </a> </td>
+               <td width="35%"></td>
+               <td> <h5>Grand total: {{grandtotal}}đ</h3> </td>
+                <td> <a href="{{url_for('clearcart')}}" class="btn btn-danger btn-sm float-right mr-4"> Clear cart</a> </td>
+           </tr>
+        </table>
+    </div>
+  </div>
+</div>
+{% endblock content %}
